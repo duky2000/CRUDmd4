@@ -1,0 +1,22 @@
+ontap/repository/IstudentRepo.java
+ ontap.repository.IstudentRepo
+ontap/service/IclassroomService.java
+ ontap.service.IclassroomService
+ontap/service/ClassroomServiceIplm.java
+ ontap.service.ClassroomServiceIplm
+ontap/repository/IclassroomRepo.java
+ ontap.repository.IclassroomRepo
+ontap/model/Classroom.java
+ ontap.model.Classroom
+ontap/config/AppliConfig.java
+ ontap.config.AppliConfig
+ontap/config/AppliInit.java
+ ontap.config.AppliInit
+ontap/controller/StudentController.java
+ ontap.controller.StudentController
+ontap/model/Student.java
+ ontap.model.Student
+ontap/service/IstudentService.java
+ ontap.service.IstudentService
+ontap/service/StudentSeverviceIplm.java
+ ontap.service.StudentSeverviceIplm
