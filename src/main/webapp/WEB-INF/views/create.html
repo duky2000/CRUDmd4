@@ -32,6 +32,9 @@
                 <td><input type="date" th:field="*{date}"></td>
             <tr>
             <tr>
+                <td><input type="file" name="upImg"></td>
+            </tr>
+            <tr>
                 <td><input placeholder="nhập địa chỉ" th:field="*{address}"></td>
                 <td style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></td>
             <tr>
@@ -52,8 +55,7 @@
                 </td>
             </tr>
             <tr>
-
-                <button type="submit" class="btn btn-success">Add New</button>
+                <td><button type="submit" class="btn btn-success">Add New</button></td>
             </tr>
             <tr>
                 <td><a href="/students" class="btn btn-info">Back</a></td>

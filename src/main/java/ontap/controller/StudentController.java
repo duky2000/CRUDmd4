@@ -5,30 +5,44 @@ import ontap.model.Student;
 import ontap.service.IclassroomService;
 import ontap.service.IstudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 public class StudentController {
+    private String upLoadFile = "C:\\Users\\DELL\\IdeaProjects\\untitled\\src\\main\\webapp\\WEB-INF\\file\\";
     @Autowired
     IstudentService istudentService;
     @Autowired
     IclassroomService iclassroomService;
 
     @RequestMapping("/students")
-    public ModelAndView homeStudent(@PageableDefault(size = 2)Pageable pageable){
+    public ModelAndView homeStudent(@RequestParam(defaultValue = "0") int pageable){
         ModelAndView modelAndView = new ModelAndView("/home");
-        modelAndView.addObject("list",istudentService.findAllPage(pageable));
+        modelAndView.addObject("list",istudentService.findAllPage(PageRequest.of(pageable, 2, Sort.by("phone"))));
         return modelAndView;
     }
+
+//    @RequestMapping("/students")
+//    public ModelAndView homeStudent(@PageableDefault(size = 2)Pageable pageable){
+//        ModelAndView modelAndView = new ModelAndView("/home");
+//        modelAndView.addObject("list",istudentService.findAllPage(pageable ));
+//        return modelAndView;
+//    }
 
 
     @ModelAttribute("listClass")
@@ -73,11 +87,19 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public ModelAndView create(@Valid @ModelAttribute Student student, BindingResult bindingResult) {
+    public ModelAndView create(@RequestParam("upImg") MultipartFile upImg, @Valid @ModelAttribute Student student, BindingResult bindingResult) {
+
         if (bindingResult.hasFieldErrors()) {
             ModelAndView modelAndView = new ModelAndView("create");
             modelAndView.addObject("student",student);
             return modelAndView;
+        }
+        String nameImg = upImg.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(upImg.getBytes(), new File(upLoadFile + nameImg));
+            student.setImg(nameImg);
+        } catch (IOException e) {
+            System.err.println("err upload file");
         }
 
         istudentService.save(student);
@@ -87,7 +109,14 @@ public class StudentController {
 
 
     @PostMapping("/edit/{id}")
-    public String edit(@ModelAttribute Student student) {
+    public String edit(@RequestParam("upImg") MultipartFile upImg,@ModelAttribute Student student) {
+        String nameImg = upImg.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(upImg.getBytes(), new File(upLoadFile + nameImg));
+            student.setImg(nameImg);
+        } catch (IOException e) {
+            System.err.println("err upload file");
+        }
         istudentService.save(student);
         return "redirect:/students";
     }
@@ -97,4 +126,9 @@ public class StudentController {
         istudentService.delete(istudentService.findById(id));
         return "redirect:/students";
     }
+//    @ExceptionHandler(Exception.class)
+//    public ModelAndView handleError(Exception e) {
+//        ModelAndView modelAndView = new ModelAndView("error");
+//        return modelAndView;
+//    }
 }

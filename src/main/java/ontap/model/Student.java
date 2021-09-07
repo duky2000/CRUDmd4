@@ -22,12 +22,20 @@ public class Student {
     //    @Email
     @Pattern(regexp = "^[a-zA-Z0-9]+@[a-z]+\\.[a-z]+$", message = "sai email")
     private String email;
+    private String img;
     @ManyToOne
     private Classroom classroom;
 
     public Student() {
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public long getId() {
         return id;

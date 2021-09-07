@@ -78,7 +78,7 @@ public class AppliConfig extends WebMvcConfigurerAdapter implements ApplicationC
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**")
-                .addResourceLocations("file:C:\\Users\\DELL\\IdeaProjects\\Session\\src\\main\\webapp\\WEB-INF\\file\\");
+                .addResourceLocations("file:C:\\Users\\DELL\\IdeaProjects\\untitled\\src\\main\\webapp\\WEB-INF\\file\\");
     }
 
     @Bean

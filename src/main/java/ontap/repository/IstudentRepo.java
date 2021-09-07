@@ -16,4 +16,6 @@ public interface IstudentRepo extends PagingAndSortingRepository<Student,Long> {
     public ArrayList<Student> fillByName(@Param("name") String name);
     Page<Student> findAll(Pageable pageable);
 
+    Iterable<Student> findAllByNameContaining(String name);
+
 }
